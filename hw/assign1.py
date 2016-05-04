@@ -146,4 +146,4 @@ def get_border(a):
   ret[2*length:3*length] = temp[::-1]
   temp = a[0,:]
   ret[3*length:] = temp[::-1]
-  return ret
+  return ret[::-1]
