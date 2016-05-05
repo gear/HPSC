@@ -3,6 +3,7 @@
 # Measure the convergence rate of FDM step09.py
 # compare with the exact solution from BEM step02.py
 
+from __future__ import division
 import numpy as np
 import math
 from matplotlib import pyplot, cm
@@ -15,7 +16,6 @@ def fem(nx=11, ny=11, nit=100, draw=False) :
   y = np.linspace(0,1,ny)
   X, Y = np.meshgrid(x,y)
   p = np.zeros((ny,nx))
-  fig = pyplot.figure(figsize=(11,7), dpi=100)
   
   for it in range(nit):
     for i in range(0,nx):
@@ -29,6 +29,7 @@ def fem(nx=11, ny=11, nit=100, draw=False) :
       for j in range(1,ny-1):
         p[j,i] = (dy**2*(pn[j,i+1]+pn[j,i-1])+dx**2*(pn[j+1,i]+pn[j-1,i]))/(2*(dx**2+dy**2))
       if draw:
+        fig = pyplot.figure(figsize=(11,7), dpi=100)
         ax = fig.gca(projection='3d')
         ax.plot_surface(X, Y, p, rstride=1, cstride=1, cmap=cm.coolwarm)
         ax.set_zlim3d(0,1)
@@ -147,3 +148,39 @@ def get_border(a):
   temp = a[0,:]
   ret[3*length:] = temp[::-1]
   return ret[::-1]
+
+def error(p,q,tor=1e-6):
+  assert len(p) == len(q)
+  error = 0.0
+  for i in range(len(p)):
+    d = p[i] - q[i] 
+    r = 0.0
+    if q[i] < tor:
+      r = (d**2) / tor
+    else:
+      r = (d**2) / (p[i]**2)
+    error += r
+  return math.sqrt(error)
+
+def error_rel(p,q):
+  assert len(p) == len(q)
+  error = 0.0
+  for i in range(len(p)):
+    d = p[i] - q[i]
+    r = 0.0
+    if d != 0:
+      r = (d**2) / ((p[i] + q[i])**2)
+    error += r
+  return math.sqrt(error)
+
+def error_rat(p,q,tor=1e-8):
+  assert len(p) == len(q)
+  sum1 = 0.0
+  sum2 = 0.0
+  for i in range(len(p)):
+    d = p[i] - q[i]
+    sum1 += d**2
+    sum2 += p[i]**2
+  if sum2 == 0:
+    sum2 = tor
+  return math.sqrt(sum1/sum2)
