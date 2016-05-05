@@ -40,7 +40,7 @@ def fem(nx=11, ny=11, nit=100, draw=False) :
     pyplot.show()
   return p
 
-def bem(n=64, inf=101, draw=False) :
+def exact(n=64, inf=101, draw=False) :
   pi = math.pi
   x = np.zeros(n)
   y = np.zeros(n)
