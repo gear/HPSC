@@ -9,7 +9,7 @@ dy = 1./(ny-1)
 nit = 100
 x = numpy.linspace(0,2,nx)
 y = numpy.linspace(0,1,ny)
-X, Y = numpy.meshgrid(x,y) 
+X, Y = numpy.meshgrid(x,y)
 p = numpy.zeros((ny,nx))
 fig = pyplot.figure(figsize=(11,7), dpi=100)
 

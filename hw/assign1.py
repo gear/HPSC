@@ -23,7 +23,7 @@ def fdm(nx=11, ny=11, nit=100, draw=False) :
   y = np.linspace(0,1,ny)
   X, Y = np.meshgrid(x,y)
   p = np.zeros((ny,nx))
-  
+
   for it in range(nit):
     for i in range(0,nx):
       p[0,i] = p[1,i]
@@ -77,7 +77,7 @@ def exact(n=64, inf=101, draw=False) :
     for j in range(1,inf,2):
       uxi += 1/(j*pi)**2/math.sinh(2*j*pi)*math.sinh(j*pi*x[i])*math.cos(j*pi*y[i])
       ux[i] = x[i] / 4 - 4*uxi
-  
+
   if draw:
     fig = pyplot.figure(figsize=(11,7), dpi=100)
     ax = fig.gca(projection='3d')
@@ -132,7 +132,7 @@ def error(p,q,tor=1e-6):
   length = len(p)
   error = 0.0
   for i in range(len(p)):
-    d = p[i] - q[i] 
+    d = p[i] - q[i]
     r = 0.0
     if q[i] < tor:
       r = (d**2) / tor
